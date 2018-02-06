@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<!--The inspiration behind this the internship last semester working at the CDC and reading
+about all the bacteria.
+
+Looking at the game of life reminded me of the tiny bacteria you see moving when
+viewing them through a microscope.-->
+
+  <head>
+
+
+    <meta charset="utf-8">
+    <title>Conway Microscope</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <style>
+    body  {
+        /*background-image: url("cont.png");*/
+        background-color: white;
+
+    }
+    div {
+      background-image: url("cont.png");
+      background-color: black;
+      background-repeat: no-repeat;
+      background-position: top center;
+      border-width: 10px;
+      border-style: groove;
+      z-index: -1;
+
+    }
+
+    div:hover {
+        -ms-transform: scale(1.5); /* IE 9 */
+        -webkit-transform: scale(1.5); /* Safari 3-8 */
+        transform: scale(1.5);
+    }
+
+    #c {
+      z-index: 2;
+      position: sticky;
+      opacity: 0.5;
+      border-radius: 50%
+    }
+
+    #c:hover {
+      opacity: 1;
+
+    }
+
+    </style>
+
+  </head>
+
+<div id="center" align="center">
+  <canvas id="c" width="300" height="300">The Canvas</canvas>
+</div>
+
+<br>
+  <body>
+  <script type="text/javascript">
+
+var canvas = document.getElementById('c').getContext('2d'),
+    cells = [];
+canvas.strokeStyle = 'rgba(0,0,0,0.0)';
+canvas.fillStyle = 'red';
+
+function myFunction1() {
+    canvas.fillStyle= 'blue';
+  }
+
+init();
+
+function init() {
+    for (var i=0; i<64; i++) {
+        cells[i] = [];
+        for (var j=0; j<64; j++) {
+            cells[i][j] = 0;
+        }
+    }
+
+    // Prefilled cells
+    [
+        [22, 5],[22, 16],[32, 15],[2, 16],[11, 5],[11, 6],[11, 7],[12, 4],[12, 8],[13, 3],[13, 9],[14, 3],[14, 9],[15, 6],
+        [22, 15],[22, 16],[32, 15],[2, 6],[11, 15],[11, 16],[11, 17],[31, 45],[31, 46],[31, 44],[32, 47],
+        [12, 15],[12, 6],[11, 15],[11, 16],[11, 17],[31, 25],[31, 26],[31, 24],
+
+    ]
+    .forEach(function(point) {
+        cells[point[0]][point[1]] = 1;
+    });
+
+    update();
+}
+
+function update() {
+
+    var result = [];
+
+    function _countNeighbours(x, y) {
+        var amount = 0;
+
+        function _isFilled(x, y) {
+            return cells[x] && cells[x][y];
+        }
+
+        if (_isFilled(x-1, y-1)) amount++;
+        if (_isFilled(x,   y-1)) amount++;
+        if (_isFilled(x+1, y-1)) amount++;
+        if (_isFilled(x-1, y  )) amount++;
+        if (_isFilled(x+1, y  )) amount++;
+        if (_isFilled(x-1, y+1)) amount++;
+        if (_isFilled(x,   y+1)) amount++;
+        if (_isFilled(x+1, y+1)) amount++;
+
+        return amount;
+    }
+
+    cells.forEach(function(row, x) {
+        result[x] = [];
+        row.forEach(function(cell, y) {
+            var alive = 0,
+                count = _countNeighbours(x, y);
+
+            if (cell > 0) {
+                alive = count === 2 || count === 3 ? 1 : 0;
+            } else {
+                alive = count === 3 ? 1 : 0;
+            }
+
+            result[x][y] = alive;
+        });
+    });
+
+    cells = result;
+
+    draw();
+}
+
+function draw() {
+    canvas.clearRect(0, 0, 512, 512);
+    cells.forEach(function(row, x) {
+        row.forEach(function(cell, y) {
+            canvas.beginPath();
+            canvas.rect(x*8, y*8, 8, 8);
+            if (cell) {
+                canvas.fill();
+            } else {
+                canvas.stroke();
+            }
+        });
+    });
+    setTimeout(function() {update();}, 80);
+  }
+
+  </script>
+  <h1 align="center">My Interpretation of Conway's Game of Life Through a Microscope</h1>
+  <button onclick="myFunction()">Reload Microscope Slide</button>
+
+  <script>
+  function myFunction() {
+    location.reload();
+  }
+  </script>
+    <button onclick="myFunction1()">Change View Color</button>
+
+  <script>
+    function myFunction1() {
+      canvas.strokeStylestyle. = "blue";
+    }
+  </script>
+
+  </body>
+</html>
