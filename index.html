@@ -10,7 +10,7 @@
 	html, body {
 		margin: 0px;
 		padding: 0px;
-		background-color: #000000;
+		background-color: #666666;
 		color:  #ffffff;
 	}
 	div#buttons {
@@ -52,7 +52,7 @@ $(document).ready(function() {
 
 <div id="buttons">
 	<button id="init">Initialize Mode</button>
-	<button id="randomize">Randomize Mode</button>
+	<button id="randomize" onclick="randomize();">Randomize Mode</button>
 	<button id="go">Begin Conway</button>
 </div>
 
@@ -64,7 +64,9 @@ $(document).ready(function() {
 	for (var i = 0; i < 32; i++) {
 		pixel[i] = [];
 		for (var j = 0; j < 32; j++){
-			pixel[i][j] = false;
+			var rnd = Math.random();
+			if (rnd > .05) pixel[i][j] = false;
+			if (rnd <= .05) pixel[i][j] = true;
 		}
 	}
 
@@ -72,15 +74,50 @@ $(document).ready(function() {
 	canv.strokeStyle = '#ffffff';
 	canv.fillStyle = '#000000';
 	
-	canv.beginPath();
-	for (var x = 0; x < pixel.length; x++) {
-		for (var y = 0; y < pixel[0].length; y++) {
-			canv.rect(x * 16, y * 16, 16, 16);
+	
+	function update() {
+		
+		canv.clearRect(0, 0, 512, 512);
+		for (var x = 0; x < pixel.length; x++) {
+			for (var y = 0; y < pixel[0].length; y++) {
+				canv.beginPath();
+				canv.rect(y * 16, x * 16, 16, 16);
+				if (!pixel[x][y]) canv.stroke();
+				if (pixel[x][y]) canv.fill();
+			}
 		}
 	}
 	
-	canv.fill()
-	canv.stroke();
+	function randomize() {
+		pixel = [];
+		
+		for (var i = 0; i < 32; i++) {
+			pixel[i] = [];
+			for (var j = 0; j < 32; j++){
+				pixel[i][j] = false;
+			}
+		}
+		for (var i = 0; i < 32; i++) {
+			pixel[i] = [];
+			for (var j = 0; j < 32; j++){
+				var rnd = Math.random();
+				if (rnd > .05) pixel[i][j] = false;
+				if (rnd <= .05) pixel[i][j] = true;
+			}
+		}
+		update();
+	}
+	
+	function initialize() {
+		// add a listener.
+		// turn pixels on or off depending on what pixels are clicked.
+	}
+	
+	function gameLoop() {
+		// Game logic loop.
+	}
+	
+	update();
 
 </script>
 
