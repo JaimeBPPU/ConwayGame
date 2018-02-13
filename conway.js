@@ -1,3 +1,5 @@
+$(document).ready(function() {
+
 var pixel = [];
 for (var i = 0; i < 32; i++) {
 	pixel[i] = [];
@@ -56,3 +58,5 @@ function gameLoop() {
 }
 
 update();
+
+});
