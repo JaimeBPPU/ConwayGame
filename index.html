@@ -10,19 +10,32 @@
 	html, body {
 		margin: 0px;
 		padding: 0px;
-		background-color: #666666;
+		background-color: #333333;
 		color:  #ffffff;
 	}
 	div#buttons {
 		width:  514px;
 		border:  0px;
-		margin:  0px;
-		padding:  0px;
+	}
+	.center{
+		margin-right: auto;
+		margin-left: auto;
 		text-align:  center;
+	}
+	.width30 {
+		width:  30%
+	}
+	.width514 {
+		width:  514px;
 	}
 	button {
 		font-size:  1.5em;
-		width:  30%
+	}
+	.block {
+		display: inline;
+	}
+	.canvborder {
+		border:  5px #ffffff solid;
 	}
 
 </style>
@@ -33,18 +46,47 @@
 
 <script type="text/javascript">
 
+	$(function() {
+	conway.listen(function(pixel) {
+
+		var canv = $("#grid")[0].getContext('2d');
+		canv.strokeStyle = '#ffffff';
+		canv.fillStyle = '#ffffff';
+		
+		canv.clearRect(0, 0, 512, 512);
+		for (var x = 0; x < pixel.length; x++) {
+			for (var y = 0; y < pixel[0].length; y++) {
+				canv.beginPath();
+				canv.rect(y * 16, x * 16, 16, 16);
+				canv.stroke();
+				if (pixel[x][y]) canv.fill();
+			}
+		}
+	});	
+	
+	conway.initialize();
+	
+	});
+
 </script>
 
 </head>
 
 <body>
 
-<canvas id="grid" width="514" height="514">HTML5 compatible browser required.</canvas>
+<div class="center">
+	<canvas id="grid" width="512" height="512" class="canvborder">HTML5 compatible browser required.</canvas>
+</div>
 
-<div id="buttons">
-	<button id="init">Initialize Mode</button>
-	<button id="randomize" onclick="randomize();">Randomize Mode</button>
-	<button id="go">Begin Conway</button>
+<div id="buttons" class="center">
+	<button id="init" class="width30" onclick="conway.initialize();">Initialize Mode</button>
+	<button id="randomize" onclick="conway.randomize();" class="width30">Randomize Mode</button>
+	<button id="go" class="width30">Begin Conway</button>
+</div>
+<div class="center width514">
+	<span class="width30 block">Fewer dots</span>
+	<span class="width30 block"><input id="howRandom" type="range" min="5" max="35" /></span>
+	<span class="width30 block">More dots</span>
 </div>
 
 </body>
