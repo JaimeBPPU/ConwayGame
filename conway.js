@@ -1,63 +1,63 @@
-var canv;
-var pixel = [];
+var conway = (function() {
 
-$(document).ready(function() {
+	var pixel = [];
 
-for (var i = 0; i < 32; i++) {
-	pixel[i] = [];
-	for (var j = 0; j < 32; j++){
-		var rnd = Math.random();
-		if (rnd > .05) pixel[i][j] = false;
-		if (rnd <= .05) pixel[i][j] = true;
+
+	function randomize() {
+		pixel = [];
+		for (var i = 0; i < 32; i++) {
+			pixel[i] = [];
+			for (var j = 0; j < 32; j++){
+				var rnd = Math.random();
+				var howRandom = $("#howRandom").val() / 100;
+				if (rnd > howRandom) pixel[i][j] = false;
+				else pixel[i][j] = true;
+			}
+		}
+		notify();
 	}
-}
 
-canv = $("#grid")[0].getContext('2d');
-canv.strokeStyle = '#ffffff';
-canv.fillStyle = '#000000';
+	function initialize() {
+		for (var i = 0; i < 32; i++) {
+			pixel[i] = [];
+			for (var j = 0; j < 32; j++){
+				pixel[i][j] = false;
+			}
+		}
+		// add a listener.
+		// turn pixels on or off depending on what pixels are clicked.
+		notify();
+	}
 
-update();
-
-});
-
-function randomize() {
-	pixel = [];
+	function gameLoop() {
+		// Game logic loop.
+	}
 	
-	for (var i = 0; i < 32; i++) {
-		pixel[i] = [];
-		for (var j = 0; j < 32; j++){
-			pixel[i][j] = false;
-		}
+	function setPixel(x, y) {
+		
 	}
-	for (var i = 0; i < 32; i++) {
-		pixel[i] = [];
-		for (var j = 0; j < 32; j++){
-			var rnd = Math.random();
-			if (rnd > .05) pixel[i][j] = false;
-			if (rnd <= .05) pixel[i][j] = true;
-		}
-	}
-	update();
-}
-
-function initialize() {
-	// add a listener.
-	// turn pixels on or off depending on what pixels are clicked.
-}
-
-function gameLoop() {
-	// Game logic loop.
-}
-
-function update() {
 	
-	canv.clearRect(0, 0, 512, 512);
-	for (var x = 0; x < pixel.length; x++) {
-		for (var y = 0; y < pixel[0].length; y++) {
-			canv.beginPath();
-			canv.rect(y * 16, x * 16, 16, 16);
-			if (!pixel[x][y]) canv.stroke();
-			if (pixel[x][y]) canv.fill();
+	var listeners = [];
+
+	// this function registers/adds a listener
+	function listen(cb) {
+	// collect them in the listeners array
+		listeners.push(cb);
+	}
+
+	// notify all listeners of a change to the grid
+	function notify() {
+	// iterate through the array and call the listen callback function
+		for (var i = 0; i < listeners.length; i++) {
+			// call the function
+			listeners[i](pixel);
 		}
 	}
-}
+
+	return {
+		randomize: randomize, 
+		listen: listen,
+		initialize: initialize
+	};
+
+})();
