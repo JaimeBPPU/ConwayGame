@@ -71,12 +71,12 @@
 
 console.log(e.offsetX +' ' + e.offsetY );
 		//var cell = $(this).attr("");
-		var x = Math.floor(e.offsetX/(512/32))
-		var y = Math.floor(e.offsetY/(512/32))
+		var y = Math.floor(e.offsetX/(512/32))
+		var x = Math.floor(e.offsetY/(512/32))
 		console.log(x);
 		console.log(y);
 		// we forward the move to the model
-		setPixel(x, y);
+		conway.setPixel(x, y);
 	});
 
 	});

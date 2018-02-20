@@ -33,7 +33,7 @@ var conway = (function() {
 	// add a listener.
 	// turn pixels on or off depending on what pixels are clicked.
 	function setPixel(x, y) {
-		pixel[x][y] = true;
+		pixel[x][y] = !pixel[x][y];
 		notify();
 	}
 
@@ -57,7 +57,9 @@ var conway = (function() {
 	return {
 		randomize: randomize,
 		listen: listen,
+		setPixel: setPixel,
 		initialize: initialize
+
 	};
 
 })();
