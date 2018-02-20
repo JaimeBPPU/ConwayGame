@@ -24,19 +24,19 @@ var conway = (function() {
 				pixel[i][j] = false;
 			}
 		}
-		// add a listener.
-		// turn pixels on or off depending on what pixels are clicked.
+
 		notify();
 	}
-
 	function gameLoop() {
 		// Game logic loop.
 	}
-	
+	// add a listener.
+	// turn pixels on or off depending on what pixels are clicked.
 	function setPixel(x, y) {
-		
+		pixel[x][y] = true;
+		notify();
 	}
-	
+
 	var listeners = [];
 
 	// this function registers/adds a listener
@@ -55,7 +55,7 @@ var conway = (function() {
 	}
 
 	return {
-		randomize: randomize, 
+		randomize: randomize,
 		listen: listen,
 		initialize: initialize
 	};

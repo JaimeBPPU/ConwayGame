@@ -52,7 +52,7 @@
 		var canv = $("#grid")[0].getContext('2d');
 		canv.strokeStyle = '#ffffff';
 		canv.fillStyle = '#ffffff';
-		
+
 		canv.clearRect(0, 0, 512, 512);
 		for (var x = 0; x < pixel.length; x++) {
 			for (var y = 0; y < pixel[0].length; y++) {
@@ -62,10 +62,23 @@
 				if (pixel[x][y]) canv.fill();
 			}
 		}
-	});	
-	
+	});
+
 	conway.initialize();
-	
+
+	$("#grid").click(function(e) {
+		// this is a controller  - event handler that fires when someone clicks on a cell
+
+console.log(e.offsetX +' ' + e.offsetY );
+		//var cell = $(this).attr("");
+		var x = Math.floor(e.offsetX/(512/32))
+		var y = Math.floor(e.offsetY/(512/32))
+		console.log(x);
+		console.log(y);
+		// we forward the move to the model
+		setPixel(x, y);
+	});
+
 	});
 
 </script>
