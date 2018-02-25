@@ -40,44 +40,44 @@
 
 </style>
 
-
 <script src="jquery-3.3.1.min.js"></script>
 <script src="conway.js"></script>
 
 <script type="text/javascript">
 
 	$(function() {
-	conway.listen(function(pixel) {
+		conway.listen(function(pixel) {
 
-		var canv = $("#grid")[0].getContext('2d');
-		canv.strokeStyle = '#ffffff';
-		canv.fillStyle = '#ffffff';
+			var canv = $("#grid")[0].getContext('2d');
+			canv.strokeStyle = '#ffffff';
+			canv.fillStyle = '#ffffff';
 
-		canv.clearRect(0, 0, 512, 512);
-		for (var x = 0; x < pixel.length; x++) {
-			for (var y = 0; y < pixel[0].length; y++) {
-				canv.beginPath();
-				canv.rect(y * 16, x * 16, 16, 16);
-				canv.stroke();
-				if (pixel[x][y]) canv.fill();
+			canv.clearRect(0, 0, 512, 512);
+			for (var y = 0; y < pixel.length; y++) {
+				for (var x = 0; x < pixel[0].length; x++) {
+					canv.beginPath();
+					canv.rect(x * 16, y * 16, 16, 16);
+					canv.stroke();
+					if (pixel[x][y]) canv.fill();
+				}
 			}
-		}
-	});
+		});
 
-	conway.initialize();
+		conway.initialize();
+		conway.howRandom = 0.2;
 
-	$("#grid").click(function(e) {
-		// this is a controller  - event handler that fires when someone clicks on a cell
+		$("#grid").click(function(e) {
+			// this is a controller  - event handler that fires when someone clicks on a cell
+			//var cell = $(this).attr("");
+			var x = Math.floor(e.offsetX/(512/32));
+			var y = Math.floor(e.offsetY/(512/32));
+			// we forward the move to the model
+			conway.setPixel(x, y);
+		});
 
-console.log(e.offsetX +' ' + e.offsetY );
-		//var cell = $(this).attr("");
-		var x = Math.floor(e.offsetX/(512/32))
-		var y = Math.floor(e.offsetY/(512/32))
-		console.log(x);
-		console.log(y);
-		// we forward the move to the model
-		setPixel(x, y);
-	});
+		$("#howRandom").change(function() {
+			conway.howRandom = $("#howRandom").val() / 100;
+		});
 
 	});
 
