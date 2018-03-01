@@ -4,42 +4,7 @@
 <head>
 
 <title>Conway Twitty's Game of Life</title>
-
-<style type="text/css">
-
-	html, body {
-		margin: 0px;
-		padding: 0px;
-		background-color: #333333;
-		color:  #ffffff;
-	}
-	div#buttons {
-		width:  514px;
-		border:  0px;
-	}
-	.center{
-		margin-right: auto;
-		margin-left: auto;
-		text-align:  center;
-	}
-	.width30 {
-		width:  30%
-	}
-	.width514 {
-		width:  514px;
-	}
-	button {
-		font-size:  1.5em;
-	}
-	.block {
-		display: inline;
-	}
-	.canvborder {
-		border:  5px #ffffff solid;
-	}
-
-</style>
-
+<link rel="stylesheet" type="text/css" href="style.css"/>
 <script src="jquery-3.3.1.min.js"></script>
 <script src="conway.js"></script>
 
@@ -48,9 +13,11 @@
 	$(function() {
 		conway.listen(function(pixel) {
 			var canv = $("#grid")[0].getContext('2d');
-			canv.strokeStyle = '#ffffff';
-			canv.fillStyle = '#ffffff';
-			
+			canv.shadowBlur=4;
+			canv.shadowColor="gray";
+			canv.strokeStyle = 'black';
+			canv.fillStyle = 'black';
+
 			canv.clearRect(0, 0, 512, 512);
 			for (var x = 0; x < pixel.length; x++) {
 				for (var y = 0; y < pixel[0].length; y++) {
@@ -72,6 +39,8 @@
 			var y = Math.floor(e.offsetY/(512/32));
 			// we forward the move to the model
 			conway.setPixel(x, y);
+			var boop = document.getElementById("boop");
+			boop.play();
 		});
 
 		$("#howRandom").change(function() {
@@ -80,20 +49,34 @@
 
 	});
 
+
+	function stopColor() {
+	  clearInterval(conway.gameLoop());
+	}
 </script>
 
 </head>
 
+<script>
+function myFunction() {
+    location.reload();
+}
+</script>
+<h2>Conway's Game of Life</h2>
 <body>
+<audio id="boop">
+	<source src='boop.mp3' type="audio/mp3">
+</audio>
 
 <div class="center">
 	<canvas id="grid" width="512" height="512" class="canvborder">HTML5 compatible browser required.</canvas>
 </div>
 
 <div id="buttons" class="center">
-	<button id="init" class="width30" onclick="conway.initialize();">Initialize Mode</button>
-	<button id="randomize" onclick="conway.randomize();" class="width30">Randomize Mode</button>
-	<button id="go" class="width30" onclick="conway.gameLoop()">Begin Conway</button>
+	<button id="init" class="width30" onclick="conway.initialize();">Clear Board</button>
+	<button id="randomize" onclick="conway.randomize();" class="width30">Randomize</button>
+	<button id="go" class="width30" onclick="conway.gameLoop()">Start Game</button>
+	<button id="stop" class="width100" onclick="myFunction()">Stop Game</button>
 </div>
 <div class="center width514">
 	<span class="width30 block">Fewer dots</span>

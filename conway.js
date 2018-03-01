@@ -1,16 +1,24 @@
 var conway = (function() {
 
+<<<<<<< HEAD
+	var pixel = [];
+
+
+	function randomize() {
+=======
 	var pixel = []; // Two dimensional array that holds true/false on/off states of all squares
 	var isRunning = false;  // Variable to check if game loop is running.
 	if (howRandom === undefined) var howRandom = .2;  // Randomize slider, API edition
 	
 	function randomize() { // This function receives a random value (stored in conway.howRandom) and activates random squares.
+>>>>>>> 286b81272f828823fa8e78ae77c74233da471794
 		pixel = [];
 		for (var i = 0; i < 32; i++) { 
 			pixel[i] = [];   // Create second dimension of arrays
 			for (var j = 0; j < 32; j++){
 				var rnd = Math.random();
-				if (rnd > conway.howRandom) pixel[i][j] = false;
+				var howRandom = $("#howRandom").val() / 100;
+				if (rnd > howRandom) pixel[i][j] = false;
 				else pixel[i][j] = true;
 			}
 		}
@@ -37,6 +45,19 @@ var conway = (function() {
 		}
 		notify();
 	}
+<<<<<<< HEAD
+	function gameLoop() {
+		// Game logic loop.
+	}
+	// add a listener.
+	// turn pixels on or off depending on what pixels are clicked.
+	function setPixel(x, y) {
+		pixel[x][y] = !pixel[x][y];
+		notify();
+	}
+
+	var listeners = [];
+=======
 	
 	function setPixel(x, y) { // Changes the state of the given block.
 		pixel[x][y] = !pixel[x][y]; // Flip true to false and vice versa.
@@ -88,6 +109,7 @@ var conway = (function() {
 	}
 	
 	var listeners = []; // Collect listeners from the UI.
+>>>>>>> 286b81272f828823fa8e78ae77c74233da471794
 
 	// this function registers/adds a listener
 	function listen(cb) {
@@ -105,12 +127,15 @@ var conway = (function() {
 	}
 
 	return {
-		howRandom: howRandom,
 		randomize: randomize,
 		listen: listen,
-		initialize: initialize,
 		setPixel: setPixel,
+<<<<<<< HEAD
+		initialize: initialize
+
+=======
 		gameLoop: gameLoop
+>>>>>>> 286b81272f828823fa8e78ae77c74233da471794
 	};
 
 })();
