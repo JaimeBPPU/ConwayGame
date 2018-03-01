@@ -4,48 +4,84 @@
 <head>
 
 <title>Conway Twitty's Game of Life</title>
-
-<style type="text/css">
-
-	html, body {
-		margin: 0px;
-		padding: 0px;
-		background-color: #666666;
-		color:  #ffffff;
-	}
-	div#buttons {
-		width:  514px;
-		border:  0px;
-		margin:  0px;
-		padding:  0px;
-		text-align:  center;
-	}
-	button {
-		font-size:  1.5em;
-		width:  30%
-	}
-
-</style>
-
-
+<link rel="stylesheet" type="text/css" href="style.css"/>
 <script src="jquery-3.3.1.min.js"></script>
 <script src="conway.js"></script>
 
 <script type="text/javascript">
 
+	$(function() {
+		conway.listen(function(pixel) {
+			var canv = $("#grid")[0].getContext('2d');
+			canv.shadowBlur=4;
+			canv.shadowColor="gray";
+			canv.strokeStyle = 'black';
+			canv.fillStyle = 'black';
+
+			canv.clearRect(0, 0, 512, 512);
+			for (var x = 0; x < pixel.length; x++) {
+				for (var y = 0; y < pixel[0].length; y++) {
+					canv.beginPath();
+					canv.rect(x * 16, y * 16, 16, 16);
+					canv.stroke();
+					if (pixel[x][y]) canv.fill();
+				}
+			}
+		});
+
+		conway.initialize();
+		conway.howRandom = 0.2;
+
+		$("#grid").click(function(e) {
+			// this is a controller  - event handler that fires when someone clicks on a cell
+			//var cell = $(this).attr("");
+			var x = Math.floor(e.offsetX/(512/32));
+			var y = Math.floor(e.offsetY/(512/32));
+			// we forward the move to the model
+			conway.setPixel(x, y);
+			var boop = document.getElementById("boop");
+			boop.play();
+		});
+
+		$("#howRandom").change(function() {
+			conway.howRandom = $("#howRandom").val() / 100;
+		});
+
+	});
+
+
+	function stopColor() {
+	  clearInterval(conway.gameLoop());
+	}
 </script>
 
 </head>
 
+<script>
+function myFunction() {
+    location.reload();
+}
+</script>
+<h2>Conway's Game of Life</h2>
 <body>
+<audio id="boop">
+	<source src='boop.mp3' type="audio/mp3">
+</audio>
 
-<canvas id="grid" width="514" height="514">HTML5 compatible browser required.</canvas>
+<div class="center">
+	<canvas id="grid" width="512" height="512" class="canvborder">HTML5 compatible browser required.</canvas>
+</div>
 
-<div id="buttons">
-
-	<button id="init" onclick="initialize();">Initialize Mode</button>
-	<button id="randomize" onclick="randomize();">Randomize Mode</button>
-	<button id="go">Begin Conway</button>
+<div id="buttons" class="center">
+	<button id="init" class="width30" onclick="conway.initialize();">Clear Board</button>
+	<button id="randomize" onclick="conway.randomize();" class="width30">Randomize</button>
+	<button id="go" class="width30" onclick="conway.gameLoop()">Start Game</button>
+	<button id="stop" class="width100" onclick="myFunction()">Stop Game</button>
+</div>
+<div class="center width514">
+	<span class="width30 block">Fewer dots</span>
+	<span class="width30 block"><input id="howRandom" type="range" min="5" max="35" /></span>
+	<span class="width30 block">More dots</span>
 </div>
 
 </body>
