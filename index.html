@@ -10,32 +10,19 @@
 	html, body {
 		margin: 0px;
 		padding: 0px;
-		background-color: #333333;
+		background-color: #666666;
 		color:  #ffffff;
 	}
 	div#buttons {
 		width:  514px;
 		border:  0px;
-	}
-	.center{
-		margin-right: auto;
-		margin-left: auto;
+		margin:  0px;
+		padding:  0px;
 		text-align:  center;
-	}
-	.width30 {
-		width:  30%
-	}
-	.width514 {
-		width:  514px;
 	}
 	button {
 		font-size:  1.5em;
-	}
-	.block {
-		display: inline;
-	}
-	.canvborder {
-		border:  5px #ffffff solid;
+		width:  30%
 	}
 
 </style>
@@ -46,60 +33,19 @@
 
 <script type="text/javascript">
 
-	$(function() {
-	conway.listen(function(pixel) {
-
-		var canv = $("#grid")[0].getContext('2d');
-		canv.strokeStyle = '#ffffff';
-		canv.fillStyle = '#ffffff';
-
-		canv.clearRect(0, 0, 512, 512);
-		for (var x = 0; x < pixel.length; x++) {
-			for (var y = 0; y < pixel[0].length; y++) {
-				canv.beginPath();
-				canv.rect(y * 16, x * 16, 16, 16);
-				canv.stroke();
-				if (pixel[x][y]) canv.fill();
-			}
-		}
-	});
-
-	conway.initialize();
-
-	$("#grid").click(function(e) {
-		// this is a controller  - event handler that fires when someone clicks on a cell
-
-console.log(e.offsetX +' ' + e.offsetY );
-		//var cell = $(this).attr("");
-		var y = Math.floor(e.offsetX/(512/32))
-		var x = Math.floor(e.offsetY/(512/32))
-		console.log(x);
-		console.log(y);
-		// we forward the move to the model
-		conway.setPixel(x, y);
-	});
-
-	});
-
 </script>
 
 </head>
 
 <body>
 
-<div class="center">
-	<canvas id="grid" width="512" height="512" class="canvborder">HTML5 compatible browser required.</canvas>
-</div>
+<canvas id="grid" width="514" height="514">HTML5 compatible browser required.</canvas>
 
-<div id="buttons" class="center">
-	<button id="init" class="width30" onclick="conway.initialize();">Initialize Mode</button>
-	<button id="randomize" onclick="conway.randomize();" class="width30">Randomize Mode</button>
-	<button id="go" class="width30">Begin Conway</button>
-</div>
-<div class="center width514">
-	<span class="width30 block">Fewer dots</span>
-	<span class="width30 block"><input id="howRandom" type="range" min="5" max="35" /></span>
-	<span class="width30 block">More dots</span>
+<div id="buttons">
+
+	<button id="init" onclick="initialize();">Initialize Mode</button>
+	<button id="randomize" onclick="randomize();">Randomize Mode</button>
+	<button id="go">Begin Conway</button>
 </div>
 
 </body>
