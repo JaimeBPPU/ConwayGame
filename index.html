@@ -47,14 +47,13 @@
 
 	$(function() {
 		conway.listen(function(pixel) {
-
 			var canv = $("#grid")[0].getContext('2d');
 			canv.strokeStyle = '#ffffff';
 			canv.fillStyle = '#ffffff';
-
+			
 			canv.clearRect(0, 0, 512, 512);
-			for (var y = 0; y < pixel.length; y++) {
-				for (var x = 0; x < pixel[0].length; x++) {
+			for (var x = 0; x < pixel.length; x++) {
+				for (var y = 0; y < pixel[0].length; y++) {
 					canv.beginPath();
 					canv.rect(x * 16, y * 16, 16, 16);
 					canv.stroke();
@@ -94,7 +93,7 @@
 <div id="buttons" class="center">
 	<button id="init" class="width30" onclick="conway.initialize();">Initialize Mode</button>
 	<button id="randomize" onclick="conway.randomize();" class="width30">Randomize Mode</button>
-	<button id="go" class="width30">Begin Conway</button>
+	<button id="go" class="width30" onclick="conway.gameLoop()">Begin Conway</button>
 </div>
 <div class="center width514">
 	<span class="width30 block">Fewer dots</span>
