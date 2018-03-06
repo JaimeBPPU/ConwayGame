@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>Conway's Game of Life</title>
+  <style>
+  table, td {
+    border-collapse: collapse;
+    border: 1px solid black;
+  }
+  </style>
+</head>
+<body>
+  <h2>Conway's Game of Life API Documentation</h2>
+  <p>This is the API documentation for our group project on Conway’s Game of Life. The game executes Conway’s Game created by  by the British mathematician John Horton Conway. You can click on the grids you want to fill or click on the random button to auto-fill, then click start game. All methods should be called on this object. Below you can find the API:<br><br></p>
+  <table>
+    <tbody><tr><td><b>Method Name</td><td><b>Parameters</td><td><b>Return Value</td><td><b>Description</td></tr>
+    <tr><td>randomize(cell)</td><td>This creates random filled cells.</td><td>None</td><td>This function receives a random value (stored in conway.howRandom) and activates random squares.</td></tr>
+    <tr><td>initialize()</td><td><i>None</i></td><td>None</td><td>Clears the grid and starts a new game.</td></tr>
+    <tr><td>gameLoop()</td><td><i>Compares all the cells and implements Conway's game logic.</i></td><td>None</td><td>Iterates through entire pixel 2d array checking and modifying the array.</td></tr>
+    <tr><td>setPixel()</td><td><i>Toggles clicking on grid between True and False</i></td><td>None</td><td>This enables mouse click on grid and flips true to false and vice versa causing the grid to be filled or not.</td></tr>
+    <tr><td>draw()</td><td><i>Draws a 32 x 32 grid.</i></td><td>None</td><td>Checks each block for on/off state, fills in all true.</td></tr>
+    <tr><td>listen(cb)</td><td><i>cb:</i> is the callback function. This function will be called when the grid changes. The grid is passed to the callback function</td><td>None</td><td>The listen(cb) functionality is used to track change in the model and receive notifications. This allows the UI to be updated when the model changes.</td></tr>
+  </tbody></table>
+
+
+</body></html>
